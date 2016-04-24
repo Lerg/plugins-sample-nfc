@@ -1,0 +1,20 @@
+settings = {
+	orientation = {
+		default = 'portrait',
+        supported = {'portrait', 'portraitUpsideDown'}
+	},
+	android = {
+        intentFilters = {
+            {
+                actions = {'android.nfc.action.NDEF_DISCOVERED'},
+                categories = {'android.intent.category.DEFAULT'}
+            },{
+                actions = {'android.nfc.action.TAG_DISCOVERED'},
+                categories = {'android.intent.category.DEFAULT'}
+            }
+        }
+    },
+	plugins = {
+	    ['plugin.nfc'] = {publisherId = 'com.spiralcodestudio'}
+	}
+}
