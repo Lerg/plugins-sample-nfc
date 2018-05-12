@@ -1,20 +1,25 @@
 settings = {
 	orientation = {
 		default = 'portrait',
-        supported = {'portrait', 'portraitUpsideDown'}
+		supported = {'portrait', 'portraitUpsideDown'}
 	},
+	iphone = {
+		plist = {
+			NFCReaderUsageDescription = 'Testing NFC'
+		}
+	}
 	android = {
-        intentFilters = {
-            {
-                actions = {'android.nfc.action.NDEF_DISCOVERED'},
-                categories = {'android.intent.category.DEFAULT'}
-            },{
-                actions = {'android.nfc.action.TAG_DISCOVERED'},
-                categories = {'android.intent.category.DEFAULT'}
-            }
-        }
-    },
+		intentFilters = {
+			{
+				actions = {'android.nfc.action.NDEF_DISCOVERED'},
+				categories = {'android.intent.category.DEFAULT'}
+			},{
+				actions = {'android.nfc.action.TAG_DISCOVERED'},
+				categories = {'android.intent.category.DEFAULT'}
+			}
+		}
+	},
 	plugins = {
-	    ['plugin.nfc'] = {publisherId = 'com.spiralcodestudio'}
+		['plugin.nfc'] = {publisherId = 'com.spiralcodestudio'}
 	}
 }
