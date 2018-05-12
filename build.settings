@@ -6,6 +6,9 @@ settings = {
 	iphone = {
 		plist = {
 			NFCReaderUsageDescription = 'Testing NFC'
+		},
+		entitlements = {
+			['com.apple.developer.nfc.readersession.formats'] = {'NDEF'}
 		}
 	},
 	android = {
