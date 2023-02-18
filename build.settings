@@ -33,7 +33,8 @@ settings = {
 				actions = {'android.nfc.action.TAG_DISCOVERED'},
 				categories = {'android.intent.category.DEFAULT'}
 			}
-		}
+		},
+		minSdkVersion = '23'
 	},
 	plugins = {
 		['plugin.nfc'] = spiralcodestudio_plugin('nfc')
