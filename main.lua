@@ -40,6 +40,9 @@ end)
 local messageToWrite
 
 local function tohex(str)
+	if str == nil then
+		return 'nil'
+	end
 	return str:gsub('.', function(char)
 	   return string.format('%02x', char:byte())
 	end)
@@ -52,46 +55,49 @@ nfc.setListener(function(event)
 		add_to_log('event.errorCode ' .. tostring(event.errorCode))
 		add_to_log('event.errorMessage ' .. tostring(event.errorMessage))
 	end
-	if messageToWrite then
-		nfc.writeTag{
-			message = messageToWrite
-		}
-		messageToWrite = nil
-		add_to_log('Written to the tag')
-	else
-		add_to_log('event.id ' .. tohex(event.id))
-		add_to_log('event.tnf ' .. tostring(event.tnf))
-		add_to_log('event.type ' .. tostring(event.type))
-		if event.tag then
-			add_to_log('event.tag.techs ' .. table.concat(event.tag.techs, ', '))
-		end
-		
-		if event.messages then
-			for i = 1, #event.messages do
-				local message = event.messages[i]
-				add_to_log('message ' .. tostring(i))
-				for j = 1, #message do
-					local record = message[j]
-					add_to_log('record ' .. tostring(j))
-					add_to_log('record.id ' .. tohex(record.id))
-					add_to_log('record.tnf ' .. tostring(record.tnf))
-					add_to_log('record.type ' .. tostring(record.type))
-					add_to_log('record.payload ' .. tostring(record.payload))
-					add_to_log('record.mimeType ' .. tostring(record.mimeType))
-					if record.data then
-						add_to_log('record.data.uri ' .. tostring(record.data.uri))
-						add_to_log('record.data.text ' .. tostring(record.data.text))
-						add_to_log('record.data.language ' .. tostring(record.data.language))
-						add_to_log('record.data.encoding ' .. tostring(record.data.encoding))
-						add_to_log('record.data.mimeType ' .. tostring(record.data.mimeType))
-						add_to_log('record.data.action ' .. tostring(record.data.action))
-						if record.data.titles then
-							for k = 1, #record.data.titles do
-								local title = record.data.titles[k]
-								add_to_log('record.data.titles[' .. tostring(k) .. '] ' .. tostring(record.data.titles[k].text))
+	add_to_log('event.phase ' .. tostring(event.phase))
+	if event.type == 'ndef' then
+		if messageToWrite then
+			nfc.writeTag{
+				message = messageToWrite
+			}
+			messageToWrite = nil
+			add_to_log('Written to the tag')
+		else
+			add_to_log('event.id ' .. tohex(event.id))
+			add_to_log('event.tnf ' .. tostring(event.tnf))
+			add_to_log('event.type ' .. tostring(event.type))
+			if event.tag then
+				add_to_log('event.tag.techs ' .. table.concat(event.tag.techs, ', '))
+			end
+
+			if event.messages then
+				for i = 1, #event.messages do
+					local message = event.messages[i]
+					add_to_log('message ' .. tostring(i))
+					for j = 1, #message do
+						local record = message[j]
+						add_to_log('record ' .. tostring(j))
+						add_to_log('record.id ' .. tohex(record.id))
+						add_to_log('record.tnf ' .. tostring(record.tnf))
+						add_to_log('record.type ' .. tostring(record.type))
+						add_to_log('record.payload ' .. tostring(record.payload))
+						add_to_log('record.mimeType ' .. tostring(record.mimeType))
+						if record.data then
+							add_to_log('record.data.uri ' .. tostring(record.data.uri))
+							add_to_log('record.data.text ' .. tostring(record.data.text))
+							add_to_log('record.data.language ' .. tostring(record.data.language))
+							add_to_log('record.data.encoding ' .. tostring(record.data.encoding))
+							add_to_log('record.data.mimeType ' .. tostring(record.data.mimeType))
+							add_to_log('record.data.action ' .. tostring(record.data.action))
+							if record.data.titles then
+								for k = 1, #record.data.titles do
+									local title = record.data.titles[k]
+									add_to_log('record.data.titles[' .. tostring(k) .. '] ' .. tostring(record.data.titles[k].text))
+								end
 							end
+
 						end
-						
 					end
 				end
 			end
